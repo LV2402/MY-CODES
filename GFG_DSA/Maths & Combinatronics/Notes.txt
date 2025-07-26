@@ -1,0 +1,153 @@
+MATHS & COMBINATORICS: ESSENTIAL CONCEPTS FOR CODING
+
+This document summarizes key number theory and mathematical concepts crucial for efficient problem-solving in competitive programming and related fields.
+
+---
+
+1. MATHEMATICAL FOUNDATIONS
+
+These are fundamental tools for basic checks, optimizing loops, and building logic in number-based problems.
+
+-   **Even/Odd Numbers:**
+    -   A number 'n' is even if `n % 2 == 0`.
+    -   Otherwise, it is odd.
+
+-   **Floor and Ceiling Functions:**
+    -   **Floor (floor(x)):** The greatest integer less than or equal to 'x'.
+        -   Example: floor(3.8) = 3
+    -   **Ceiling (ceil(x)):** The smallest integer greater than or equal to 'x'.
+        -   Example: ceil(3.2) = 4
+
+-   **Sum of First 'n' Natural Numbers:**
+    -   Sum = (n * (n + 1)) / 2
+
+-   **Greatest Common Divisor (GCD):**
+    -   The largest number that divides two integers 'a' and 'b' without leaving a remainder.
+    -   Found using the **Euclidean Algorithm**: `gcd(a, b) = gcd(b, a % b)` (recursive definition, base case gcd(a, 0) = a).
+
+-   **Least Common Multiple (LCM):**
+    -   The smallest positive integer that is divisible by both 'a' and 'b'.
+    -   Formula: `lcm(a, b) = (a * b) / gcd(a, b)`
+
+-   **Perfect Number:**
+    -   A positive integer that is equal to the sum of its proper positive divisors (divisors excluding the number itself).
+    -   Example: 6 (proper divisors: 1, 2, 3; sum = 1 + 2 + 3 = 6)
+
+-   **Finding Factors of a Number 'n':**
+    -   Iterate from `i = 1` up to `sqrt(n)`.
+    -   If `n % i == 0`, then both `i` and `n / i` are factors.
+    -   Store both `i` and `n/i`. (Handle perfect squares carefully if `i == n/i`).
+
+-   **Decimal to Binary Conversion:**
+    -   Repeatedly divide the decimal number by 2.
+    -   Store the remainders at each step.
+    -   The binary representation is formed by reading the remainders in reverse order.
+
+---
+
+2. PRIME NUMBER ALGORITHMS AND SIEVE TECHNIQUES
+
+-   **Prime Number Definition:**
+    -   A natural number greater than 1 that has exactly two distinct positive divisors: 1 and itself.
+    -   Examples: 2, 3, 5, 7, 11...
+
+-   **Basic Primality Check:**
+    -   To check if 'n' is prime, attempt to divide it by numbers from 2 up to 'n-1'.
+    -   If any number divides 'n' evenly, 'n' is composite (not prime). Otherwise, it's prime.
+    -   (This method is inefficient for larger 'n').
+
+-   **Optimized Primality Check (Square Root Check):**
+    -   **Optimization Principle:** If 'n' has a factor larger than `sqrt(n)`, it must also have a corresponding smaller factor less than `sqrt(n)`.
+    -   Therefore, to check if 'n' is prime, we only need to test for divisibility by numbers from 2 up to `sqrt(n)`.
+    -   If no number in this range divides 'n' evenly, then 'n' is prime.
+    -   **Further Optimization (6k +/- 1 rule):** After checking divisibility by 2 and 3, subsequent checks can be limited to numbers of the form `6k - 1` and `6k + 1` (i.e., `i`, `i+2` incrementing `i` by 6).
+
+-   **Sieve of Eratosthenes:**
+    -   An highly efficient algorithm to find *all* prime numbers up to a given limit 'n'.
+    -   **Process:**
+        1.  Create a boolean list (or array) `prime` of size `n+1`, initialized to `True` for all entries (assuming all numbers are prime).
+        2.  Start with `p = 2` (the first prime).
+        3.  While `p*p <= n`:
+            a.  If `prime[p]` is `True` (meaning 'p' is a prime number not yet crossed out):
+                i.  Mark all multiples of `p` as non-prime (set `prime[multiple]` to `False`). Start marking from `p*p` because smaller multiples (e.g., `2*p, 3*p`) would have already been marked by smaller primes.
+            b.  Increment `p` by 1.
+        4.  After the loop, all numbers `i` for which `prime[i]` is still `True` are prime numbers.
+    -   **Efficiency:** Much faster for finding many primes than checking each number individually.
+
+---
+
+3. PRIME FACTORIZATION TECHNIQUES
+
+-   **Optimised Trial Division:**
+    -   To find prime factors of 'n':
+        1.  Start by dividing `n` repeatedly by 2 until it's no longer divisible. Collect all 2s as factors.
+        2.  Then, iterate through odd numbers `i` from 3 up to `sqrt(n)`.
+        3.  For each `i`, repeatedly divide `n` by `i` as long as it's divisible. Collect all `i`'s as factors.
+        4.  If, after these steps, `n` is still greater than 1, then the remaining `n` itself is a prime factor.
+
+-   **Using Sieve + SPF (Smallest Prime Factor):**
+    -   **Concept:** This technique is for efficiently factorizing *multiple* numbers, not just one.
+    -   **Pre-computation (Sieve part):** Use a modified Sieve algorithm to precompute and store the Smallest Prime Factor (SPF) for every number up to a given limit. For each number `i`, `spf[i]` will store the smallest prime number that divides `i`.
+    -   **Factorization (using SPF):** To factorize a number 'x':
+        1.  Repeatedly look up `spf[x]`. This is one of its prime factors.
+        2.  Add `spf[x]` to your list of factors.
+        3.  Divide `x` by `spf[x]` to get a new `x`.
+        4.  Continue until 'x' becomes 1.
+    -   **Counting Prime Factors (from factorization):**
+        -   If `n = p1^e1 * p2^e2 * ... * pk^ek` (prime factorization).
+        -   The total number of divisors of 'n' is: `(e1 + 1) * (e2 + 1) * ... * (ek + 1)`.
+        -   Each exponent `eᵢ` gives `(eᵢ + 1)` choices for how many times that prime factor `pᵢ` appears in a divisor (from `pᵢ^0` up to `pᵢ^eᵢ`).
+
+---
+
+4. MODULAR ARITHMETIC
+
+-   **Concept:** A system of arithmetic where numbers "wrap around" after reaching a certain value, called the **modulus (M)**.
+    -   `a % M` means the remainder when 'a' is divided by 'M'.
+
+-   **Modular Addition:**
+    -   `(a + b) % M = ((a % M) + (b % M)) % M`
+    -   Ensures the result stays within `[0, M-1]`.
+
+-   **Modular Subtraction:**
+    -   `(a - b) % M = ((a % M) - (b % M) + M) % M`
+    -   Adding `M` before the final modulo handles potential negative results from `(a % M) - (b % M)`.
+
+-   **Modular Multiplication:**
+    -   `(a * b) % M = ((a % M) * (b % M)) % M`
+    -   Crucial for avoiding integer overflow when 'a' and 'b' are large.
+
+-   **Modular Division (using Modular Inverse):**
+    -   Direct division is not possible. Instead, we multiply by the **modular inverse**.
+    -   `(a / b) % M` is equivalent to `(a * b^-1) % M`, where `b^-1` is the modular inverse of `b` modulo `M`.
+    -   **Modular Inverse (`b^-1`):** A number `x` such that `(b * x) % M = 1`.
+    -   **Calculating Modular Inverse (Fermat's Little Theorem):**
+        -   If `gcd(b, M) = 1` (b and M are coprime) AND `M` is a prime number, then:
+            `b^-1 ≡ b^(M-2) % M`
+        -   This `b^(M-2) % M` is calculated using **Binary Exponentiation** (or modular exponentiation).
+
+-   **Binary Exponentiation (or Modular Exponentiation):**
+    -   **Purpose:** To calculate `(a^b) % M` very efficiently in `O(log b)` time.
+    -   **Principle:** Instead of performing 'b' multiplications, it breaks down the exponent 'b' into its binary representation.
+    -   `a^b = a^(b_k * 2^k + ... + b_1 * 2^1 + b_0 * 2^0)`
+    -   This allows us to compute `a^b` by repeatedly squaring 'a' and multiplying terms only when the corresponding bit in 'b' is set (1).
+
+---
+
+5. EULER’S TOTIENT & INCLUSION-EXCLUSION TECHNIQUES
+
+-   **Euler’s Totient Function (φ(n)):**
+    -   Counts the number of positive integers `k` such that `1 <= k <= n` and `k` is coprime to `n` (i.e., `gcd(k, n) = 1`).
+    -   **Formula:** If the prime factorization of `n` is `n = p1^e1 * p2^e2 * ... * pk^ek` (where `p_i` are distinct prime factors).
+        `φ(n) = n * (1 - 1/p1) * (1 - 1/p2) * ... * (1 - 1/pk)`
+    -   **Example:** `φ(6) = 2` (numbers are 1, 5).
+
+-   **Inclusion-Exclusion Principle (IEP):**
+    -   A counting technique used to find the number of elements in the union of overlapping sets without counting anything more than once.
+    -   **General Idea:** Add the sizes of individual sets, then subtract the sizes of pairwise overlaps, then add back the sizes of triple overlaps, and continue alternating signs until the intersection of all sets.
+    -   **Generalized Formula:**
+        `|A1 U A2 U ... U An| = Sum(|Ai|) - Sum(|Ai intersect Aj|) + Sum(|Ai intersect Aj intersect Ak|) - ... + (-1)^(n+1) * |A1 intersect A2 intersect ... intersect An|`
+    -   **Example for 3 Sets (A, B, C):**
+        `|A U B U C| = |A| + |B| + |C| - |A intersect B| - |B intersect C| - |A intersect C| + |A intersect B intersect C|`
+
+---
