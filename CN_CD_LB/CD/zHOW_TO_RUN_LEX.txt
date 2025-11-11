@@ -1,0 +1,135 @@
+Got it — you want **a simple, clear set of steps** for running the Lex programs using **vi editor**, without extra cheat-sheet style details.
+
+Here is exactly what you need for **any Lex program** (applies to all previous programs: vowels/consonants, line/word/char count, digit, 3cse1, keyword recognition).
+
+---
+
+# ✅ **HOW TO RUN ANY LEX PROGRAM USING `vi` (step-by-step)**
+
+---
+
+## **STEP 1: Open a new file in vi**
+
+```
+vi program.l
+```
+
+---
+
+## **STEP 2: Enter INSERT mode**
+
+```
+i
+```
+
+Now you can type/paste your Lex code.
+
+---
+
+## **STEP 3: After typing code, exit INSERT mode**
+
+Press:
+
+```
+Esc
+```
+
+---
+
+## **STEP 4: Save the file**
+
+```
+:w
+```
+
+---
+
+## **STEP 5: Save and Quit**
+
+```
+:wq
+```
+
+---
+
+# ✅ **STEP 6: Run Lex**
+
+```
+lex program.l
+```
+
+This generates a file:
+
+```
+lex.yy.c
+```
+
+---
+
+# ✅ **STEP 7: Compile the generated C file**
+
+```
+gcc lex.yy.c -o program
+```
+
+Where `program` is your executable name (you can choose any name).
+
+---
+
+# ✅ **STEP 8: Run the Lex program**
+
+```
+./program
+```
+
+---
+
+# ✅ **STEP 9: Enter your input**
+
+Depending on the program:
+
+### Example:
+
+```
+Hello World
+```
+
+For keyword program, you stop input by pressing:
+
+```
+Ctrl + D
+```
+
+---
+
+# ✅ **Done. Output will be printed automatically.**
+
+---
+
+# ✅ Applies to previous 5 programs:
+
+### ✔ vowel_consonant.l
+
+### ✔ count_lwc.l
+
+### ✔ digit_print.l
+
+### ✔ star_token.l
+
+### ✔ keyword_recognition.l
+
+All follow the same exact steps:
+
+1. `vi filename.l`
+2. `i` → paste code
+3. `Esc`
+4. `:wq`
+5. `lex filename.l`
+6. `gcc lex.yy.c -o filename`
+7. `./filename`
+8. Give input
+9. Output shown
+
+---
+
+If you want, I will generate a **single-page summary** for your record front page.
